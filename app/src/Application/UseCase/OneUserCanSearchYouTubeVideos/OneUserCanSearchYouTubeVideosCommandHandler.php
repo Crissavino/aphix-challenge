@@ -37,21 +37,29 @@ class OneUserCanSearchYouTubeVideosCommandHandler
             foreach ($searchResponse['items'] as $searchResult) {
                 switch ($searchResult['id']['kind']) {
                     case 'youtube#video':
+
+                        $videoHtml = '<div class="col-md-4" id="videos"><h2>'.$searchResult['snippet']['title'].'</h2><iframe width="100%" height="500" src="https://www.youtube.com/embed/'.$searchResult['id']['videoId'].'" frameborder="0" allowfullscreen></iframe></div>';
                         $videos[] = [
                             'title' => $searchResult['snippet']['title'],
-                            'videoId' => $searchResult['id']['videoId']
+                            'videoId' => $searchResult['id']['videoId'],
+                            'html' => $videoHtml
                         ];
                         break;
                     case 'youtube#channel':
+                        $channelHtml = '<div class="col-md-4"><div class="card"><div class="card-body"><h5 class="card-title">'.$searchResult['snippet']['title'].'</h5><p class="card-text">'.$searchResult['snippet']['description'].'</p><a href="https://www.youtube.com/channel/'.$searchResult['id']['channelId'].'" target="_blank" class="btn btn-primary">Go to channel</a></div></div></div>';
                         $channels[] = [
                             'title' => $searchResult['snippet']['title'],
-                            'channelId' => $searchResult['id']['channelId']
+                            'description' => $searchResult['snippet']['description'],
+                            'channelId' => $searchResult['id']['channelId'],
+                            'html' => $channelHtml
                         ];
                         break;
                     case 'youtube#playlist':
+                        $playlistHtml = '<div class="col-md-4" id="videos"><h2>'.$searchResult['snippet']['title'].'</h2><iframe width="100%" height="500" src="https://www.youtube.com/embed/videoseries?list='.$searchResult['id']['playlistId'].'" frameborder="0" allowfullscreen></iframe></div>';
                         $playlists[] = [
                             'title' => $searchResult['snippet']['title'],
-                            'channelId' => $searchResult['id']['playlistId']
+                            'channelId' => $searchResult['id']['playlistId'],
+                            'html' => $playlistHtml
                         ];
                         break;
                 }
