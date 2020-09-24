@@ -19,11 +19,9 @@ class OneUserCanSearchYouTubeVideosCommandHandler
 
     public function handler(OneUserCanSearchYouTubeVideosCommand $command): array
     {
-        // This is my apikey, it is in my .env
-        // YOUTUBE_API_KEY=AIzaSyA1PxZJR0nx0uYhTiGANkgqoC9WpBYkHcE
-        // But I put it here as the default value
+
         $client = new Google_Client();
-        $client->setDeveloperKey(env("YOUTUBE_API_KEY", "AIzaSyA1PxZJR0nx0uYhTiGANkgqoC9WpBYkHcE"));
+        $client->setDeveloperKey(env("YOUTUBE_API_KEY"));
 
         $youtube = new Google_Service_YouTube($client);
 
